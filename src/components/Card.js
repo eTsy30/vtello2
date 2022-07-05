@@ -20,7 +20,7 @@ export default function Card({ card, index }) {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
         >
-          <Paper className={classes.card}>{card.name}</Paper>
+          <Paper className={classes.card}>{card.name + ' ' + card.id + 'pos= ' + card.pos}  </Paper>
         </div>
       )}
     </Draggable>

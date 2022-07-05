@@ -13,6 +13,8 @@ import { SinginPage } from './components/SinginPage/SinginPage';
 import { Board } from './components/Board/Board';
 import Lists from './components/Board/TrelloCard'
 import List from './components/List/List';
+import { moveListPosition } from './utils/redux/moveListPosition'
+import { moveTOlist } from './utils/redux/moveToAnotherList'
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -33,9 +35,11 @@ export default function App() {
 
   const dispatch = useDispatch()
   const lists = useSelector((state) => state.listReduser.nameList)
+  const cards = useSelector((state) => state.cardReduser.nameCard)
+
   useEffect(() => {
     dispatch(getListData('62597042aff92c4fe13edf79'))
-  }, [])
+  }, [lists, cards])
 
 
 
@@ -99,51 +103,50 @@ export default function App() {
     setData(newState);
   };
 
+  const getPositions = (arr, destination) => {
+    return arr.reduce((acc, list, index) => {
+      if (destination.index === index) {
+        acc = acc + Number(list.pos)
+      } else if (destination.index - 1 === index) {
+        acc = acc + Number(list.pos)
+      }
+      return acc;
+    }, 0)
+
+  }
   const onDragEnd = (result) => {
+
+
+
     const { destination, source, draggableId, type } = result;
-    console.log('destination', destination, 'source', source, draggableId);
+
+    console.log('destination куда=', destination, 'source источник=', source, draggableId, type);
+
+
 
     if (!destination) {
       return;
     }
+
+
+
     if (type === 'list') {
-      const newListIds = data.listIds;
-      newListIds.splice(source.index, 1);
-      newListIds.splice(destination.index, 0, draggableId);
-      return;
-    }
+      const pos = {
+        pos: getPositions(lists, destination) / 2,
+        id: draggableId
+      }
 
-    const sourceList = data.lists[source.droppableId];
-    const destinationList = data.lists[destination.droppableId];
-    const draggingCard = sourceList.cards.filter(
-      (card) => card.id === draggableId
-    )[0];
-
-    if (source.droppableId === destination.droppableId) {
-      sourceList.cards.splice(source.index, 1);
-      destinationList.cards.splice(destination.index, 0, draggingCard);
-      const newSate = {
-        ...data,
-        lists: {
-          ...data.lists,
-          [sourceList.id]: destinationList,
-        },
-      };
-      setData(newSate);
+      dispatch(moveListPosition(pos))
     } else {
-      sourceList.cards.splice(source.index, 1);
-      destinationList.cards.splice(destination.index, 0, draggingCard);
+      const moveparams = {
+        card: draggableId,
+        list: destination.droppableId
+      }
+      dispatch(moveTOlist(moveparams))
 
-      const newState = {
-        ...data,
-        lists: {
-          ...data.lists,
-          [sourceList.id]: sourceList,
-          [destinationList.id]: destinationList,
-        },
-      };
-      setData(newState);
     }
+
+
   };
 
   return (
@@ -173,7 +176,7 @@ export default function App() {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {lists.map((list, index) => <List list={list} key={list.id} index={index} />)
+                  {lists.map((list, index) => <List list={list} key={list.id} s index={index} />)
 
                   })
                   <InputContainer type="list" />

@@ -25,7 +25,7 @@ export default function List({ list, index }) {
   }, [])
   const cards = useSelector((state) => state.cardReduser.nameCard)
 
-  console.log('array', cards);
+  // console.log('array', cards);
 
   const classes = useStyle();
   return (
@@ -34,7 +34,7 @@ export default function List({ list, index }) {
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Paper className={classes.root} {...provided.dragHandleProps}>
             <CssBaseline />
-            <Title title={list.name} listId={list.id} />
+            <Title title={list.name + ' ' + list.id + '   ' + 'list.pos=' + list.pos} listId={list.id} />
             <Droppable droppableId={list.id}>
               {(provided) => (
                 <div
