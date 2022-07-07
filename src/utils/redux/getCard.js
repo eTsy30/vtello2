@@ -55,23 +55,37 @@ const cardReduser = createSlice({
             console.log('=+=', action.payload.resultCard);
             console.log('moveCardOnList', typeof action.payload.resultCard);
             const items = Array.from(action.payload.resultCard);
-            const [reorderedItem] = items.splice(action.payload.result.source.index, 1);
+
+
+            const [reorderedItem] = state.splice(action.payload.result.source.index, 1);
             items.splice(action.payload.result.destination.index, 0, reorderedItem);
 
             state.nameCard = { ...state.nameCard, [action.payload.id]: items }
 
         },
         removeCard: (state, action) => {
-            console.log('===', action.payload.resultCard);
-            const items = Array.from(action.payload.resultCard);
-            console.log(items, '1');
-            const [delitedCard] = items.splice(action.payload.result.source.index, 1);
-            console.log(delitedCard, '2');
-            state.nameCard = { ...state.nameCard, [action.payload.id]: items }
-            console.log('state.nameCard', state.nameCard);
-            items.push(delitedCard)
-            state.nameCard = { ...state.nameCard, [action.payload.idDestination]: [...items.push(delitedCard)] }
-            console.log('state.nameCard1', state.nameCard);
+            console.log(state, 'State');
+            const { destination, source } = action.payload
+            const cardlistFrom = state.nameCard[source.droppableId]
+
+            const cardlistTo = state.nameCard[destination.droppableId]
+            const elementMove = cardlistFrom[source.index]
+            cardlistFrom.splice(source.index, 1)
+            cardlistTo.splice(destination.index, 0, elementMove)
+
+
+
+            console.log(elementMove.id, 'elementMove');
+            // console.log('resultCard', action.payload.resultCard);
+            // const items = Array.from(action.payload.resultCard);
+            // console.log(items, '1');
+            // const [delitedCard] = items.splice(action.payload.result.source.index, 1);
+            // console.log(delitedCard, 'delet element');
+            // state.nameCard = { ...state.nameCard, [action.payload.id]: items }
+            // console.log('state.nameCard', state.nameCard);
+            // items.push(delitedCard)
+            // // state.nameCard = { ...state.nameCard, [action.payload.idDestination]: items }
+            // console.log('state.nameCard1', state.nameCard);
         },
         addCard: (state, action) => {
             // console.log('state', state);

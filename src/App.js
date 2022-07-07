@@ -35,7 +35,7 @@ export default function App() {
 
   const lists = useSelector((state) => state.listReduser.nameList)
   const cards = useSelector((state) => state.cardReduser.nameCard)
-
+  console.log(cards);
   const arrAllLIst = lists.map(listElement => {
     return { ...listElement, cards: cards[listElement.id] }
   })
@@ -124,50 +124,55 @@ export default function App() {
     console.log('destination куда=', destination, 'source источник=', source, draggableId, type, 'listID=', listID);
 
 
-    if (!destination) {
-      return;
-    }
-    //////////////////////////////////////////////
-    if (destination.droppableId === 'app') {
-      const pos = {
-        pos: getPositions(lists, destination) / 2,
-        id: draggableId
-      }
-      dispatch(moveLits({ lists, result }))
-      dispatch(moveListPosition(pos))
-      return
-    }
-    //////////////////////////////////////////
-    if (source.droppableId === destination.droppableId) {
-      const id = source.droppableId
-      const resultCard = cards[id]
-      const pos = {
-        pos: getPositions(cards[id], destination) / 2,
-        id: draggableId
-      }
+    dispatch(removeCard({ destination, source, }))
 
-      dispatch(moveCardOnList({ resultCard, result, id }))
-      dispatch(moveCardInItsList(pos))
-      return
-    } else {
-
-      const id = source.droppableId
-      const resultCard = cards[id]
-      const moveparams = {
-        card: draggableId,
-        list: destination.droppableId,
-      }
-      const idDestination = destination.droppableId
-
-      dispatch(removeCard({ resultCard, result, id, idDestination }))
-      // dispatch(addCard({ resultCard, result, idDestination }))
-      dispatch(moveTOlist(moveparams))
-      //cardid
-      //listid
-    }
+    // if (!destination) {
+    //   return;
+    // }
+    // //////////////////////////////////////////////
+    // if (destination.droppableId === 'app') {
+    //   const pos = {
+    //     pos: getPositions(lists, destination) / 2,
+    //     id: draggableId
+    //   }
+    //   dispatch(moveLits({ lists, result }))
+    //   dispatch(moveListPosition(pos))
+    //   return
+    // }
+    // //////////////////////////////////////////
+    // if (source.droppableId === destination.droppableId) {
 
 
-  };
+    //   const id = source.droppableId
+    //   const resultCard = cards[id]
+    //   const pos = {
+    //     pos: getPositions(cards[id], destination) / 2,
+    //     id: draggableId
+    //   }
+
+    //   dispatch(moveCardOnList({ resultCard, result, id }))
+    //   dispatch(moveCardInItsList(pos))
+    //   return
+    // } else {
+
+
+    //   // const id = source.droppableId
+    //   // const resultCard = cards[id]
+    //   // const moveparams = {
+    //   //   card: draggableId,
+    //   //   list: destination.droppableId,
+    //   // }
+    //   // const idDestination = destination.droppableId
+
+
+    //   // dispatch(addCard({ resultCard, result, idDestination }))
+    //   dispatch(moveTOlist(moveparams))
+    //   //cardid
+    //   //listid
+  }
+
+
+
 
   return (<StoreApi.Provider value={{ addMoreCard, addMoreList, updateListTitle }}>
     <div
