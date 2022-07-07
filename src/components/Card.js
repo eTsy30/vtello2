@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,20 +10,28 @@ const useStyle = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
-export default function Card({ card, index }) {
-
+export default function Card({ card, index, listID }) {
   const classes = useStyle();
+
   return (
-    <Draggable draggableId={card.id} index={index}>
+    <Draggable draggableId={card.id} index={index} type="card">
       {(provided) => (
         <div
           ref={provided.innerRef}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
         >
-          <Paper className={classes.card}>{card.name + ' ' + card.id + 'pos= ' + card.pos}  </Paper>
+          <Paper className={classes.card}>{card.name + 'pos= ' + card.pos + '  ' + 'ID=' + card.id + 'olol' + listID}</Paper>
         </div>
       )}
     </Draggable>
   );
 }
+///====
+
+
+
+
+
+
+

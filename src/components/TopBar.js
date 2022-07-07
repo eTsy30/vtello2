@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux'
 import { Typography, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -20,10 +21,12 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function TopBar({ setOpen }) {
+  const board = useSelector((state) => state.boardReduser.nameBoard)
+  console.log(board, '=====================)))))))');
   const classes = useStyle();
   return (
     <div className={classes.root}>
-      <Typography className={classes.title}>Daily Trello</Typography>
+      <Typography className={classes.title}>{board.name}</Typography>
       <Button className={classes.btn} onClick={() => setOpen(true)}>
         Change Background
       </Button>

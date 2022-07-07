@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    nameCard: [],
+    nameCard: {},
     // idboard: null,
     isLoading: null,
 
@@ -10,19 +10,19 @@ const initialState = {
 
 export const getCardData = createAsyncThunk(
     'getCardtData',
-    async (cardId) => {
+    async (cardId,) => {
 
         const apiKey = 'f1efcc0f321ad7be4623828f1dcff1c7'
         const apiToken = '8b09f6f119b24c1cbb4ea6c944fc1741468029616691f9d86728d4ae8b851967'
-        const boardId = '62597042aff92c4fe13edf79'
-        // return fetch(`https://api.trello.com/1/members/me/boards?key=${apiKey}&token=${apiToken}`)
+
+
         return fetch(` https://api.trello.com/1/lists/${cardId}/cards?key=${apiKey}&token=${apiToken}`)
 
             .then(function (response) {
                 if (response.ok) {
                     return response.json().then(function (data) {
 
-                        return data
+                        return { data, cardId }
                     })
                 }
             })
@@ -36,7 +36,8 @@ const cardReduser = createSlice({
 
         },
         [getCardData.fulfilled]: (state, action) => {
-            state.nameCard = [...state.nameCard, action.payload];
+
+            state.nameCard = { ...state.nameCard, [action.payload.cardId]: action.payload.data }
             state.isLoading = false;
 
 
@@ -47,7 +48,51 @@ const cardReduser = createSlice({
             state.isLoading = false;
         }
     },
-    reducers: {}
+    reducers: {
+        moveCardOnList: (state, action) => {
+
+
+            console.log('=+=', action.payload.resultCard);
+            console.log('moveCardOnList', typeof action.payload.resultCard);
+            const items = Array.from(action.payload.resultCard);
+            const [reorderedItem] = items.splice(action.payload.result.source.index, 1);
+            items.splice(action.payload.result.destination.index, 0, reorderedItem);
+
+            state.nameCard = { ...state.nameCard, [action.payload.id]: items }
+
+        },
+        removeCard: (state, action) => {
+            console.log('===', action.payload.resultCard);
+            const items = Array.from(action.payload.resultCard);
+            console.log(items, '1');
+            const [delitedCard] = items.splice(action.payload.result.source.index, 1);
+            console.log(delitedCard, '2');
+            state.nameCard = { ...state.nameCard, [action.payload.id]: items }
+            console.log('state.nameCard', state.nameCard);
+            items.push(delitedCard)
+            state.nameCard = { ...state.nameCard, [action.payload.idDestination]: [...items.push(delitedCard)] }
+            console.log('state.nameCard1', state.nameCard);
+        },
+        addCard: (state, action) => {
+            // console.log('state', state);
+
+            const items = Array.from(action.payload.resultCard);
+            console.log(items, 'items');
+            const [reorderedItem] = items.splice(action.payload.result.source.index, 1);
+            console.log([reorderedItem], '[reorderedItem]');
+            console.log(action.payload.id, 'iiiiiiiii');
+            // items.splice(action.payload.result.destination.index, 0, reorderedItem);
+            // console.log('firstindex', action.payload.result.destination.index);
+            // console.log('Целое число, показывающее количество старых удаляемых из массива элементов.', 0);
+            // // console.log('Добавляемые к массиву элементы', reorderedItem);
+            // console.log(items, 'final')
+
+            // console.log('state.nameCard', state.nameCard);
+
+            state.nameCard = { ...state.nameCard, [action.payload.id]: [reorderedItem] }
+            console.log('final store', state.nameCard);
+        }
+    }
 })
 export default cardReduser.reducer
-export const { } = cardReduser.actions
+export const { moveCardOnList, removeCard, addCard } = cardReduser.actions

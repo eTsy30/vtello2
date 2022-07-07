@@ -24,7 +24,7 @@ export const moveListPosition = createAsyncThunk(
 
             const responseFormat = await response.json()
 
-            console.log(responseFormat);
+
             return responseFormat
         }
         catch (error) {
@@ -40,13 +40,12 @@ const moveListTOListReduser = createSlice({
     extraReducers: {
         [moveListPosition.pending]: (state) => {
             state.isLoading = true;
-            console.log('pending');
 
         },
         [moveListPosition.fulfilled]: (state, action) => {
             state.nameBoard = action.payload;
             state.isLoading = false;
-            console.log('fulfilled');
+
 
 
 
@@ -54,7 +53,7 @@ const moveListTOListReduser = createSlice({
         },
         [moveListPosition.rejected]: (state) => {
             state.isLoading = false;
-            console.log('rejected');
+
         }
     },
     reducers: {}

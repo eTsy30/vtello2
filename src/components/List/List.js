@@ -25,24 +25,23 @@ export default function List({ list, index }) {
   }, [])
   const cards = useSelector((state) => state.cardReduser.nameCard)
 
-  // console.log('array', cards);
-
+  const listcard = cards[list.id]
   const classes = useStyle();
   return (
-    <Draggable draggableId={list.id} index={index}>
+    <Draggable draggableId={list.id} index={index} type="list1">
       {(provided) => (
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Paper className={classes.root} {...provided.dragHandleProps}>
             <CssBaseline />
-            <Title title={list.name + ' ' + list.id + '   ' + 'list.pos=' + list.pos} listId={list.id} />
-            <Droppable droppableId={list.id}>
+            <Title title={list.name + '' + 'listid=' + list.id} />
+            <Droppable droppableId={list.id} >
               {(provided) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={classes.cardContainer}
                 >
-                  {cards.map((card, index) => card.map(card => (list.id === card.idList ? <Card key={card.id} card={card} index={index} /> : '')))}
+                  {listcard && listcard.map((card, index) => <Card key={card.id} listID={list.id} card={card} index={index} />)}
 
                   {provided.placeholder}
                 </div>
@@ -56,3 +55,5 @@ export default function List({ list, index }) {
     </Draggable>
   );
 }
+//==
+
