@@ -19,6 +19,7 @@ export const getListData = createAsyncThunk(
             const response = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${apiKey}&token=${apiToken}`)
             const responseListData = await response.json()
             return responseListData
+            console.log(responseListData);
         }
         catch (error) {
             return console.log(error);

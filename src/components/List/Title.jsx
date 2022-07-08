@@ -6,6 +6,7 @@ import storeApi from '../../utils/storeApi';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
 import { deliteList } from '../../utils/redux/delList';
+import { useSelector } from 'react-redux';
 const useStyle = makeStyles((theme) => ({
   editableTitleContainer: {
     margin: theme.spacing(1),
@@ -29,6 +30,7 @@ export default function Title({ title, listId }) {
   const [open, setOpen] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const { updateListTitle } = useContext(storeApi);
+
   const classes = useStyle();
   const dispatch = useDispatch()
   const handleOnChange = (e) => {

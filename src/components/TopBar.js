@@ -25,11 +25,13 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function TopBar({ setOpen }) {
-  const board = useSelector((state) => state.boardReduser.nameBoard)
+
+  const userName = useSelector((state) => state.memberReduser.memberName)
+
   const classes = useStyle();
   return (
     <div className={classes.root}>
-      <Typography className={classes.title}>{board.name}</Typography>
+      <Typography className={classes.title}>{userName.fullName}</Typography>
       <Button className={classes.btn} onClick={() => setOpen(true)}>
         Change Background
       </Button>

@@ -10,7 +10,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import TopBar from '../TopBar';
 import SideMenu from '../SideMenu';
 import { useParams } from "react-router-dom";
-
+import { getName } from '../../utils/redux/getMemberName'
 
 import List from '../List/List';
 // import { moveListPosition } from './utils/redux/moveListPosition'
@@ -32,6 +32,7 @@ const useStyle = makeStyles((theme) => ({
 export const MainPage = () => {
     const params = useParams();
     const idBoard = params.i
+    const board = useSelector((state) => state.boardReduser.nameBoard)
     const dispatch = useDispatch()
 
     const lists = useSelector((state) => state.listReduser.nameList)
@@ -44,6 +45,7 @@ export const MainPage = () => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
+        dispatch(getName(board[0].idMemberCreator))
         dispatch(getListData(idBoard))
     }, [])
 

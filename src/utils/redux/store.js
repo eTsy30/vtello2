@@ -13,6 +13,8 @@ import newListReduser from './addNewList'
 import newCardReduser from './addNewCard'
 import delCardReduser from './delCard'
 import delListReduser from './delList'
+import memberReduser from './getMemberName'
+
 export const store = configureStore({
     reducer: {
         tokenTrelloReduser: tokenTrelloReduser,
@@ -25,7 +27,8 @@ export const store = configureStore({
         newListReduser: newListReduser,
         newCardReduser: newCardReduser,
         delCardReduser: delCardReduser,
-        delListReduser: delListReduser
+        delListReduser: delListReduser,
+        memberReduser: memberReduser
     },
 
 }, applyMiddleware(thunk))
