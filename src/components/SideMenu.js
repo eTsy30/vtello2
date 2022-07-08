@@ -11,6 +11,7 @@ const useStyle = makeStyles((theme) => ({
   title: {
     fontSize: '1.2rem',
     fontWeight: 'bold',
+
   },
   titleContainer: {
     marginTop: theme.spacing(2),
@@ -56,8 +57,12 @@ export default function SideMenu({ setBackgroundUrl, setOpen, open }) {
       }}
     >
       <div className={classes.titleContainer}>
-        <Typography className={classes.title}>Change Background</Typography>
-        <Clear />
+        <Typography
+
+          className={classes.title}>Change Background</Typography>
+        <Clear
+          onClick={() => setOpen(!open)}
+        />
       </div>
       <Divider />
 

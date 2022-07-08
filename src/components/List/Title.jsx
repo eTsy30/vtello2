@@ -3,7 +3,9 @@ import { Typography, InputBase } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import storeApi from '../../utils/storeApi';
-
+import CloseIcon from '@material-ui/icons/Close';
+import { useDispatch } from 'react-redux';
+import { deliteList } from '../../utils/redux/delList';
 const useStyle = makeStyles((theme) => ({
   editableTitleContainer: {
     margin: theme.spacing(1),
@@ -28,6 +30,7 @@ export default function Title({ title, listId }) {
   const [newTitle, setNewTitle] = useState(title);
   const { updateListTitle } = useContext(storeApi);
   const classes = useStyle();
+  const dispatch = useDispatch()
   const handleOnChange = (e) => {
     setNewTitle(e.target.value);
   };
@@ -36,6 +39,12 @@ export default function Title({ title, listId }) {
     updateListTitle(newTitle, listId);
     setOpen(false);
   };
+
+  const closeList = () => {
+    console.log(listId);
+    dispatch(deliteList(listId))
+  }
+
   return (
     <div>
       {open ? (
@@ -60,6 +69,7 @@ export default function Title({ title, listId }) {
             {title}
           </Typography>
           <MoreHorizIcon />
+          <CloseIcon onClick={closeList} />
         </div>
       )}
     </div>

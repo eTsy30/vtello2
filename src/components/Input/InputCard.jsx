@@ -3,7 +3,10 @@ import { Paper, InputBase, Button, IconButton } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import { makeStyles, alpha } from '@material-ui/core/styles';
 import storeApi from '../../utils/storeApi';
-
+import { useDispatch } from 'react-redux';
+import { addList } from '../../utils/redux/addNewList'
+import { getListData } from '../../utils/redux/getList'
+import { addCard } from '../../utils/redux/addNewCard';
 const useStyle = makeStyles((theme) => ({
   card: {
     width: '280px',
@@ -26,19 +29,34 @@ const useStyle = makeStyles((theme) => ({
 }));
 export default function InputCard({ setOpen, listId, type }) {
   const classes = useStyle();
-  const { addMoreCard, addMoreList } = useContext(storeApi);
+  const dispatch = useDispatch()
+  const idBoard = useContext(storeApi);
   const [title, setTitle] = useState('');
 
   const handleOnChange = (e) => {
     setTitle(e.target.value);
   };
+
   const handleBtnConfirm = () => {
     if (type === 'card') {
-      addMoreCard(title, listId);
+      const addCardParam = {
+        name: title,
+        idList: listId
+      }
+
+      console.log('type', type, 'title', title, 'listId', listId);
+      dispatch(addCard(addCardParam))
+      dispatch(getListData(idBoard))
       setTitle('');
       setOpen(false);
     } else {
-      addMoreList(title);
+      const addListParam = {
+        name: title,
+        idBoard: idBoard
+      }
+
+      dispatch(addList(addListParam))
+      dispatch(getListData(idBoard))
       setTitle('');
       setOpen(false);
     }

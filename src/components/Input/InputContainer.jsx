@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, Typography, Collapse } from '@material-ui/core';
 import { makeStyles, alpha } from '@material-ui/core/styles';
-import InputCard from './InputCard';
+import InputCard from '../Input/InputCard';
 
 const useStyle = makeStyles((theme) => ({
   root: {

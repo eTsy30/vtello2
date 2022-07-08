@@ -9,6 +9,10 @@ import listReduser from './getList'
 import moveListReduser from './moveToAnotherList'
 import moveListTOListReduser from './moveListPosition'
 import moveCard from './moveCardPocitionOnList'
+import newListReduser from './addNewList'
+import newCardReduser from './addNewCard'
+import delCardReduser from './delCard'
+import delListReduser from './delList'
 export const store = configureStore({
     reducer: {
         tokenTrelloReduser: tokenTrelloReduser,
@@ -17,7 +21,11 @@ export const store = configureStore({
         listReduser: listReduser,
         moveListReduser: moveListReduser,
         moveListTOListReduser: moveListTOListReduser,
-        moveCard: moveCard
+        moveCard: moveCard,
+        newListReduser: newListReduser,
+        newCardReduser: newCardReduser,
+        delCardReduser: delCardReduser,
+        delListReduser: delListReduser
     },
 
 }, applyMiddleware(thunk))

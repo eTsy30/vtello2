@@ -87,27 +87,9 @@ const cardReduser = createSlice({
             // items.push(delitedCard)
             // // state.nameCard = { ...state.nameCard, [action.payload.idDestination]: items }
             // console.log('state.nameCard1', state.nameCard);
-        },
-        addCard: (state, action) => {
-            // console.log('state', state);
-
-            const items = Array.from(action.payload.resultCard);
-            console.log(items, 'items');
-            const [reorderedItem] = items.splice(action.payload.result.source.index, 1);
-            console.log([reorderedItem], '[reorderedItem]');
-            console.log(action.payload.id, 'iiiiiiiii');
-            // items.splice(action.payload.result.destination.index, 0, reorderedItem);
-            // console.log('firstindex', action.payload.result.destination.index);
-            // console.log('Целое число, показывающее количество старых удаляемых из массива элементов.', 0);
-            // // console.log('Добавляемые к массиву элементы', reorderedItem);
-            // console.log(items, 'final')
-
-            // console.log('state.nameCard', state.nameCard);
-
-            state.nameCard = { ...state.nameCard, [action.payload.id]: [reorderedItem] }
-            console.log('final store', state.nameCard);
         }
+
     }
 })
 export default cardReduser.reducer
-export const { moveCardOnList, removeCard, addCard } = cardReduser.actions
+export const { moveCardOnList, removeCard } = cardReduser.actions

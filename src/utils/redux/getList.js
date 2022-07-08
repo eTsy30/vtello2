@@ -11,12 +11,12 @@ const initialState = {
 export const getListData = createAsyncThunk(
     'getListData',
 
-    async (listsId) => {
-        console.log(listsId);
+    async (boardId) => {
+
         try {
             const apiKey = 'f1efcc0f321ad7be4623828f1dcff1c7'
             const apiToken = '8b09f6f119b24c1cbb4ea6c944fc1741468029616691f9d86728d4ae8b851967'
-            const response = await fetch(`https://api.trello.com/1/boards/${listsId}/lists?key=${apiKey}&token=${apiToken}`)
+            const response = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${apiKey}&token=${apiToken}`)
             const responseListData = await response.json()
             return responseListData
         }

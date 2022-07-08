@@ -9,16 +9,16 @@ import { Board } from './components/Board/Board';
 import { MainPage } from './components/MainPage/MainPage';
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      {/* <App /> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/Board" element={<Board />} />
-          <Route path="/MainPage/:i" element={<MainPage />} />
-        </Routes>
-      </BrowserRouter>
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    {/* <App /> */}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/Board" element={<Board />} />
+        <Route path="/MainPage/:i" element={<MainPage />} />
+      </Routes>
+    </BrowserRouter>
+    {/* </React.StrictMode> */}
   </Provider>,
 
   document.getElementById('root')

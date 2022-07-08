@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { v4 as uuid } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListData } from '../../utils/redux/getList'
-import store from '../../utils/store';
+
 import StoreApi from '../../utils/storeApi';
 import InputContainer from '../Input/InputContainer';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,20 +31,20 @@ const useStyle = makeStyles((theme) => ({
 }));
 export const MainPage = () => {
     const params = useParams();
-
+    const idBoard = params.i
     const dispatch = useDispatch()
 
     const lists = useSelector((state) => state.listReduser.nameList)
     const cards = useSelector((state) => state.cardReduser.nameCard)
-    console.log(cards);
-    const arrAllLIst = lists.map(listElement => {
-        return { ...listElement, cards: cards[listElement.id] }
-    })
-    const [data, setData] = useState(store);
+
+    // const arrAllLIst = lists.map(listElement => {
+    //     return { ...listElement, cards: cards[listElement.id] }
+    // })
+
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        dispatch(getListData(params.i))
+        dispatch(getListData(idBoard))
     }, [])
 
 
@@ -52,57 +52,10 @@ export const MainPage = () => {
     const classes = useStyle();
 
 
-    const addMoreCard = (title, listId) => {
-        console.log(title, listId);
-        const newCardId = uuid();
-        const newCard = {
-            id: newCardId,
-            title,
-        };
 
-        const list = data.lists[listId];
-        list.cards = [...list.cards, newCard];
 
-        const newState = {
-            ...data,
-            lists: {
-                ...data.lists,
-                [listId]: list,
-            },
-        };
-        setData(newState);
-    };
 
-    const addMoreList = (title) => {
-        const newListId = uuid();
-        const newList = {
-            id: newListId,
-            title,
-            cards: [],
-        };
-        const newState = {
-            listIds: [...data.listIds, newListId],
-            lists: {
-                ...data.lists,
-                [newListId]: newList,
-            },
-        };
-        setData(newState);
-    };
 
-    const updateListTitle = (title, listId) => {
-        const list = data.lists[listId];
-        list.title = title;
-
-        const newState = {
-            ...data,
-            lists: {
-                ...data.lists,
-                [listId]: list,
-            },
-        };
-        setData(newState);
-    };
 
     const getPositions = (arr, destination) => {
         let count = 0
@@ -177,41 +130,42 @@ export const MainPage = () => {
 
 
 
-    return (<StoreApi.Provider value={{ addMoreCard, addMoreList, updateListTitle }}>
-        <div
-            className={classes.root}
-            style={{
-                backgroundImage: `url(${backgroundUrl})`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-            }}
-        >
-            <TopBar setOpen={setOpen} />
+    return (
+        <StoreApi.Provider value={idBoard}>
+            <div
+                className={classes.root}
+                style={{
+                    backgroundImage: `url(${backgroundUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                }}
+            >
+                <TopBar setOpen={setOpen} />
 
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="app" type="list" direction="horizontal">
-                    {(provided) => (
-                        <div
-                            className={classes.listContainer}
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                        >
-                            {lists.map((list, index) => <List list={list} key={list.id} s index={index} />)
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="app" type="list" direction="horizontal">
+                        {(provided) => (
+                            <div
+                                className={classes.listContainer}
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                            >
+                                {lists.map((list, index) => <List list={list} key={list.id} s index={index} />)
 
-                            }
-                            <InputContainer type="list" />
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
-            <SideMenu
-                setBackgroundUrl={setBackgroundUrl}
-                open={open}
-                setOpen={setOpen}
-            />
-        </div>
-    </StoreApi.Provider>
+                                }
+                                <InputContainer type="list" />
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+                <SideMenu
+                    setBackgroundUrl={setBackgroundUrl}
+                    open={open}
+                    setOpen={setOpen}
+                />
+            </div>
+        </StoreApi.Provider>
     )
 
 

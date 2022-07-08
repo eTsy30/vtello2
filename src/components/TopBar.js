@@ -7,7 +7,7 @@ const useStyle = makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    margin: theme.spacing(2),
+    margin: theme.spacing(4),
   },
   title: {
     fontSize: '1.2rem',
@@ -17,12 +17,15 @@ const useStyle = makeStyles((theme) => ({
   btn: {
     color: '#fff',
     background: 'hsla(0,0%,100%,.24)',
+    position: 'fixed',
+    right: '10px',
+    top: '3px'
+
   },
 }));
 
 export default function TopBar({ setOpen }) {
   const board = useSelector((state) => state.boardReduser.nameBoard)
-  console.log(board, '=====================)))))))');
   const classes = useStyle();
   return (
     <div className={classes.root}>
