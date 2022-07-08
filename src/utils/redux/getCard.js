@@ -75,6 +75,7 @@ const cardReduser = createSlice({
 
 
 
+
             console.log(elementMove.id, 'elementMove');
             // console.log('resultCard', action.payload.resultCard);
             // const items = Array.from(action.payload.resultCard);

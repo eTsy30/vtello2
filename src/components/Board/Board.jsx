@@ -73,7 +73,7 @@ export const Board = () => {
 
             {boards.map(board => (<Cell key={board.id}>
 
-                <Link to={`/TrelloList/${board.id}`}>
+                <Link to={`/MainPage/${board.id}`}>
                     <Button onClick={() => itemCard(board.id)}><span className='textColor'>{board.name}</span></Button>
                 </Link>
             </Cell>))}

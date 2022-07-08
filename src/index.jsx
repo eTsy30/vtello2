@@ -6,7 +6,7 @@ import { store } from './utils/redux/store'
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Board } from './components/Board/Board';
-import { TrelloList } from './components/Board/TrelloList';
+import { MainPage } from './components/MainPage/MainPage';
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
@@ -15,7 +15,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/Board" element={<Board />} />
-          <Route path="/TrelloList/:i" element={<TrelloList />} />
+          <Route path="/MainPage/:i" element={<MainPage />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
