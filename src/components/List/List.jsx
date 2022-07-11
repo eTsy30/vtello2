@@ -33,7 +33,7 @@ export default function List({ list, index }) {
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Paper className={classes.root} {...provided.dragHandleProps}>
             <CssBaseline />
-            <Title title={list.name} listId={list.id} />
+            <Title title={list.name + list.id} listId={list.id} />
             <Droppable droppableId={list.id} >
               {(provided) => (
                 <div

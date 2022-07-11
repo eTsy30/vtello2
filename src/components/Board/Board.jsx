@@ -77,7 +77,7 @@ export const Board = () => {
                     <Button onClick={() => itemCard(board.id)}><span className='textColor'>{board.name}</span></Button>
                 </Link>
             </Cell>))}
-            <Button onClick={activateModal}>*</Button>
+            {/* <Button onClick={activateModal}>*</Button> */}
             <Modal
                 active={modalActive}
                 setActive={setModaiActive}

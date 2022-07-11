@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch } from 'react-redux';
 import { deliteCard } from '../utils/redux/delCard'
-import { getListData } from '../utils/redux/getList'
+import { getCardData } from '../utils/redux/getCard'
 import storeApi from '../utils/storeApi';
 const useStyle = makeStyles((theme) => ({
   card: {
@@ -22,10 +22,13 @@ export default function Card({ card, index, cardId }) {
   const classes = useStyle();
   const dispatch = useDispatch()
   const idBoard = useContext(storeApi);
-  const delCard = () => {
 
-    dispatch(deliteCard(card.id))
-    dispatch(getListData(idBoard))
+
+  const delCard = async () => {
+
+    await dispatch(deliteCard(card.id))
+    dispatch(getCardData(card.idList))
+
   }
   return (
     <Draggable draggableId={card.id} index={index} type="card">
@@ -35,7 +38,7 @@ export default function Card({ card, index, cardId }) {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
         >
-          <Paper className={classes.card}>{card.name}<IconButton
+          <Paper className={classes.card}>{card.name + card.id}<IconButton
             onClick={delCard}
             className={classes.del} aria-label="delete">
             <DeleteIcon />

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Paper, InputBase, Button, IconButton } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import { makeStyles, alpha } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { addList } from '../../utils/redux/addNewList'
 import { getListData } from '../../utils/redux/getList'
 import { addCard } from '../../utils/redux/addNewCard';
+import { getCardData } from '../../utils/redux/getCard'
 const useStyle = makeStyles((theme) => ({
   card: {
     width: '280px',
@@ -35,18 +36,19 @@ export default function InputCard({ setOpen, listId, type }) {
 
   const handleOnChange = (e) => {
     setTitle(e.target.value);
+    console.log(e.target.value);
   };
 
-  const handleBtnConfirm = () => {
+  const handleBtnConfirm = async () => {
+    console.log('start');
     if (type === 'card') {
       const addCardParam = {
         name: title,
         idList: listId
       }
-
-      console.log('type', type, 'title', title, 'listId', listId);
-      dispatch(addCard(addCardParam))
-      dispatch(getListData(idBoard))
+      console.log(addCardParam);
+      await dispatch(addCard(addCardParam))
+      dispatch(getCardData(listId))
       setTitle('');
       setOpen(false);
     } else {
@@ -55,12 +57,13 @@ export default function InputCard({ setOpen, listId, type }) {
         idBoard: idBoard
       }
 
-      dispatch(addList(addListParam))
+      await dispatch(addList(addListParam))
       dispatch(getListData(idBoard))
       setTitle('');
       setOpen(false);
     }
   };
+
 
   return (
     <div>
@@ -69,7 +72,7 @@ export default function InputCard({ setOpen, listId, type }) {
           <InputBase
             onChange={handleOnChange}
             multiline
-            onBlur={() => setOpen(false)}
+
             fullWidth
             inputProps={{
               className: classes.input,

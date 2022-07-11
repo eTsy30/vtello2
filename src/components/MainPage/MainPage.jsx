@@ -13,11 +13,12 @@ import { useParams } from "react-router-dom";
 import { getName } from '../../utils/redux/getMemberName'
 
 import List from '../List/List';
-// import { moveListPosition } from './utils/redux/moveListPosition'
-// import { moveTOlist } from './utils/redux/moveToAnotherList'
-// import { moveLits } from './utils/redux/getList'
-import { removeCard } from '../../utils/redux/getCard'
-// import { moveCardInItsList } from './utils/redux/moveCardPocitionOnList'
+import { moveListPosition } from '../../utils/redux/moveListPosition'
+import { moveTOlist } from '../../utils/redux/moveToAnotherList'
+import { moveLits } from '../../utils/redux/getList'
+import { moveCard } from '../../utils/redux/getCard'
+import { moveCardInItsList } from '../../utils/redux/moveCardPocitionOnList'
+import { getCardData } from '../../utils/redux/getCard'
 const useStyle = makeStyles((theme) => ({
     root: {
         minHeight: '100vh',
@@ -34,7 +35,9 @@ export const MainPage = () => {
     const idBoard = params.i
     const board = useSelector((state) => state.boardReduser.nameBoard)
     const dispatch = useDispatch()
-
+    console.log(board);
+    const boardName = board.filter(b => { if (b.id === idBoard) { return b } })
+    // console.log(a[0].name);
     const lists = useSelector((state) => state.listReduser.nameList)
     const cards = useSelector((state) => state.cardReduser.nameCard)
 
@@ -49,15 +52,8 @@ export const MainPage = () => {
         dispatch(getListData(idBoard))
     }, [])
 
-
     const [backgroundUrl, setBackgroundUrl] = useState('');
     const classes = useStyle();
-
-
-
-
-
-
 
     const getPositions = (arr, destination) => {
         let count = 0
@@ -67,64 +63,57 @@ export const MainPage = () => {
             }
             if (destination.index === index) {
                 count += Number(el.pos);
-
             }
         }
         )
-
         return count
-
     }
-    const onDragEnd = (result) => {
+
+    const onDragEnd = async (result) => {
         const { destination, source, draggableId, type, listID } = result;
         console.log('destination куда=', destination, 'source источник=', source, draggableId, type, 'listID=', listID);
 
+        if (!destination) {
+            console.log('if');
+            return;
+        }
 
-        dispatch(removeCard({ destination, source, }))
+        if (destination.droppableId === 'app') {
+            console.log('app');
+            const pos = {
+                pos: getPositions(lists, destination) / 2,
+                id: draggableId
+            }
+            dispatch(moveLits({ lists, result }))
+            dispatch(moveListPosition(pos))
+            return
+        }
 
-        // if (!destination) {
-        //   return;
-        // }
-        // //////////////////////////////////////////////
-        // if (destination.droppableId === 'app') {
-        //   const pos = {
-        //     pos: getPositions(lists, destination) / 2,
-        //     id: draggableId
-        //   }
-        //   dispatch(moveLits({ lists, result }))
-        //   dispatch(moveListPosition(pos))
-        //   return
-        // }
-        // //////////////////////////////////////////
-        // if (source.droppableId === destination.droppableId) {
+        if (destination.droppableId !== 'app') {
+            console.log('!app');
+            if (destination.droppableId === source.droppableId) {
 
+                console.log(destination.droppableId, source.droppableId, 'OOOOOOO');
+                const pos = {
+                    pos: getPositions(cards[source.droppableId], destination) / 2,
+                    id: draggableId
+                }
+                dispatch(moveCard({ destination, source }))
+                await dispatch(moveCardInItsList(pos))
+                dispatch(getCardData(destination.droppableId))
+                return
+            }
 
-        //   const id = source.droppableId
-        //   const resultCard = cards[id]
-        //   const pos = {
-        //     pos: getPositions(cards[id], destination) / 2,
-        //     id: draggableId
-        //   }
+            console.log('Another');
+            const pos = {
+                list: destination.droppableId,
+                card: draggableId
+            }
+            dispatch(moveCard({ destination, source }))
+            await dispatch(moveTOlist(pos))
+            dispatch(getCardData(destination.droppableId))
+        }
 
-        //   dispatch(moveCardOnList({ resultCard, result, id }))
-        //   dispatch(moveCardInItsList(pos))
-        //   return
-        // } else {
-
-
-        //   // const id = source.droppableId
-        //   // const resultCard = cards[id]
-        //   // const moveparams = {
-        //   //   card: draggableId,
-        //   //   list: destination.droppableId,
-        //   // }
-        //   // const idDestination = destination.droppableId
-
-
-        //   // dispatch(addCard({ resultCard, result, idDestination }))
-        //   dispatch(moveTOlist(moveparams))
-        //   //cardid
-        //   //listid
     }
 
 
@@ -146,6 +135,7 @@ export const MainPage = () => {
 
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="app" type="list" direction="horizontal">
+
                         {(provided) => (
                             <div
                                 className={classes.listContainer}
