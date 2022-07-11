@@ -10,7 +10,7 @@ const initialState = {
 export const addCard = createAsyncThunk(
     'addList',
     async (addCardParam) => {
-        console.log(addCardParam);
+
         try {
             const apiKey = 'f1efcc0f321ad7be4623828f1dcff1c7'
             const apiToken = '8b09f6f119b24c1cbb4ea6c944fc1741468029616691f9d86728d4ae8b851967'
@@ -21,7 +21,7 @@ export const addCard = createAsyncThunk(
                 }
             })
             const responseListData = await response.json()
-            console.log(responseListData);
+
             return responseListData
         }
         catch (error) {
@@ -35,13 +35,13 @@ const newCardReduser = createSlice({
     extraReducers: {
         [addCard.pending]: (state) => {
             state.isLoading = true;
-            console.log('pending');
+
 
         },
         [addCard.fulfilled]: (state, action) => {
             state.addCard = action.payload;
             state.isLoading = false;
-            console.log('fulfilled');
+
 
 
 

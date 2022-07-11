@@ -49,20 +49,7 @@ const cardReduser = createSlice({
         }
     },
     reducers: {
-        // moveCardOnList: (state, action) => {
 
-
-        //     console.log('=+=', action.payload.resultCard);
-        //     console.log('moveCardOnList', typeof action.payload.resultCard);
-        //     const items = Array.from(action.payload.resultCard);
-
-
-        //     const [reorderedItem] = state.splice(action.payload.result.source.index, 1);
-        //     items.splice(action.payload.result.destination.index, 0, reorderedItem);
-
-        //     state.nameCard = { ...state.nameCard, [action.payload.id]: items }
-
-        // },
         moveCard: (state, action) => {
 
             const { destination, source } = action.payload

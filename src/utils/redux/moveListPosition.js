@@ -11,7 +11,7 @@ const initialState = {
 export const moveListPosition = createAsyncThunk(
     'moveList',
     async (pos) => {
-        console.log(pos);
+
         try {
             const apiKey = 'f1efcc0f321ad7be4623828f1dcff1c7'
             const apiToken = '8b09f6f119b24c1cbb4ea6c944fc1741468029616691f9d86728d4ae8b851967'

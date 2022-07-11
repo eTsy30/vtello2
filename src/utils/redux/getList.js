@@ -19,7 +19,7 @@ export const getListData = createAsyncThunk(
             const response = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${apiKey}&token=${apiToken}`)
             const responseListData = await response.json()
             return responseListData
-            console.log(responseListData);
+
         }
         catch (error) {
             return console.log(error);
@@ -51,7 +51,7 @@ const listReduser = createSlice({
     reducers: {
 
         moveLits: (state, action) => {
-            console.log('moveLits', typeof action.payload.lists);
+
             const items = Array.from(action.payload.lists);
 
             const [reorderedItem] = items.splice(action.payload.result.source.index, 1);

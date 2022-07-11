@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getBoardData } from '../../utils/redux/getBoard'
 import { getListData } from '../../utils/redux/getList'
 import { useEffect } from "react";
-import { makeStyles, alpha } from '@material-ui/core/styles';
+
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
-import randomColor from "randomcolor";
-import { AddBoad } from './addBoad';
+
 import { Modal } from './Modal'
 import './board.css'
 
@@ -67,7 +66,7 @@ export const Board = () => {
     }
 
     return (<div className='boardMain'>
-        {/* <h1>Boards</h1> */}
+
         <div className='container'  >
 
 
@@ -77,14 +76,11 @@ export const Board = () => {
                     <Button onClick={() => itemCard(board.id)}><span className='textColor'>{board.name}</span></Button>
                 </Link>
             </Cell>))}
-            {/* <Button onClick={activateModal}>*</Button> */}
+
             <Modal
                 active={modalActive}
                 setActive={setModaiActive}
 
-            // status={responseStatus}
-            // naviganeSucsess="/"
-            // naviganeNOTSucsess="/new-password"
             ></Modal>
 
         </div>

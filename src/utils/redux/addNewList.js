@@ -10,7 +10,7 @@ const initialState = {
 export const addList = createAsyncThunk(
     'addList',
     async (addListParam) => {
-        console.log(addListParam);
+
         try {
             const apiKey = 'f1efcc0f321ad7be4623828f1dcff1c7'
             const apiToken = '8b09f6f119b24c1cbb4ea6c944fc1741468029616691f9d86728d4ae8b851967'
@@ -31,13 +31,12 @@ const newListReduser = createSlice({
     extraReducers: {
         [addList.pending]: (state) => {
             state.isLoading = true;
-            console.log('pending');
+
 
         },
         [addList.fulfilled]: (state, action) => {
             state.addList = action.payload;
             state.isLoading = false;
-            console.log('fulfilled');
 
 
 

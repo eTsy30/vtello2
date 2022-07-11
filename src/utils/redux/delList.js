@@ -10,7 +10,7 @@ const initialState = {
 export const deliteList = createAsyncThunk(
     'deliteCard',
     async (listId) => {
-        console.log(listId);
+
         try {
             const apiKey = 'f1efcc0f321ad7be4623828f1dcff1c7'
             const apiToken = '8b09f6f119b24c1cbb4ea6c944fc1741468029616691f9d86728d4ae8b851967'
@@ -31,13 +31,12 @@ const delListReduser = createSlice({
     extraReducers: {
         [deliteList.pending]: (state) => {
             state.isLoading = true;
-            console.log('pending');
 
         },
         [deliteList.fulfilled]: (state, action) => {
             state.delList = action.payload;
             state.isLoading = false;
-            console.log('fulfilled');
+
 
 
 

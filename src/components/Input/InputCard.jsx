@@ -36,17 +36,17 @@ export default function InputCard({ setOpen, listId, type }) {
 
   const handleOnChange = (e) => {
     setTitle(e.target.value);
-    console.log(e.target.value);
+
   };
 
   const handleBtnConfirm = async () => {
-    console.log('start');
+
     if (type === 'card') {
       const addCardParam = {
         name: title,
         idList: listId
       }
-      console.log(addCardParam);
+
       await dispatch(addCard(addCardParam))
       dispatch(getCardData(listId))
       setTitle('');

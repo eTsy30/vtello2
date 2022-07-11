@@ -19,7 +19,7 @@ export const getBoardData = createAsyncThunk(
             .then(function (response) {
                 if (response.ok) {
                     return response.json().then(function (data) {
-                        console.log(data);
+
                         return data.filter(board => !board.closed)
                     })
                 }

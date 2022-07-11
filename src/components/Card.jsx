@@ -38,7 +38,7 @@ export default function Card({ card, index, cardId }) {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
         >
-          <Paper className={classes.card}>{card.name + card.id}<IconButton
+          <Paper className={classes.card}>{card.name}<IconButton
             onClick={delCard}
             className={classes.del} aria-label="delete">
             <DeleteIcon />

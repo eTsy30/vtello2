@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { v4 as uuid } from 'uuid';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { getListData } from '../../utils/redux/getList'
 
@@ -35,15 +35,13 @@ export const MainPage = () => {
     const idBoard = params.i
     const board = useSelector((state) => state.boardReduser.nameBoard)
     const dispatch = useDispatch()
-    console.log(board);
+
     const boardName = board.filter(b => { if (b.id === idBoard) { return b } })
-    // console.log(a[0].name);
+
     const lists = useSelector((state) => state.listReduser.nameList)
     const cards = useSelector((state) => state.cardReduser.nameCard)
 
-    // const arrAllLIst = lists.map(listElement => {
-    //     return { ...listElement, cards: cards[listElement.id] }
-    // })
+
 
     const [open, setOpen] = useState(false);
 
@@ -74,12 +72,12 @@ export const MainPage = () => {
         console.log('destination куда=', destination, 'source источник=', source, draggableId, type, 'listID=', listID);
 
         if (!destination) {
-            console.log('if');
+
             return;
         }
 
         if (destination.droppableId === 'app') {
-            console.log('app');
+
             const pos = {
                 pos: getPositions(lists, destination) / 2,
                 id: draggableId
@@ -90,10 +88,10 @@ export const MainPage = () => {
         }
 
         if (destination.droppableId !== 'app') {
-            console.log('!app');
+
             if (destination.droppableId === source.droppableId) {
 
-                console.log(destination.droppableId, source.droppableId, 'OOOOOOO');
+
                 const pos = {
                     pos: getPositions(cards[source.droppableId], destination) / 2,
                     id: draggableId
@@ -104,7 +102,7 @@ export const MainPage = () => {
                 return
             }
 
-            console.log('Another');
+
             const pos = {
                 list: destination.droppableId,
                 card: draggableId
@@ -142,7 +140,7 @@ export const MainPage = () => {
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                {lists.map((list, index) => <List list={list} key={list.id} s index={index} />)
+                                {lists.map((list, index) => <List list={list} key={list.id} idBoard={idBoard} index={index} />)
 
                                 }
                                 <InputContainer type="list" />

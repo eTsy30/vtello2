@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Paper, Typography, CssBaseline } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Paper, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Title from './Title';
 import Card from '../Card';
@@ -17,7 +17,7 @@ const useStyle = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
 }));
-export default function List({ list, index }) {
+export default function List({ list, index, idBoard }) {
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function List({ list, index }) {
         <div {...provided.draggableProps} ref={provided.innerRef}>
           <Paper className={classes.root} {...provided.dragHandleProps}>
             <CssBaseline />
-            <Title title={list.name + list.id} listId={list.id} />
+            <Title title={list.name} listId={list.id} idBoard={idBoard} />
             <Droppable droppableId={list.id} >
               {(provided) => (
                 <div
