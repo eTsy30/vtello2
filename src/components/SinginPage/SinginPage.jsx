@@ -47,7 +47,7 @@ export const SinginPage = () => {
     const dispatch = useDispatch()
     const [inputValue, setinputValue] = useState('')
     const keyTrello = useSelector((state) => state.tokenTrelloReduser);
-    console.log(keyTrello);
+
     const changeTextField = (event) => {
         setinputValue(event.target.value)
     }

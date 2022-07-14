@@ -7,7 +7,7 @@
 }
 .container{
 
-width: 50%;
+
 height:100vh ;
 
   display: grid;
@@ -30,4 +30,28 @@ height:100vh ;
   font-weight: bold;
   font-size: medium;
   color: aliceblue;
+}
+@media screen and (max-width: 700px) {
+  .container{
+
+    width: 100%;
+  
+    
+      display: grid;
+
+
+      
+
+      grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr;
+    
+      gap: 0px;
+      height: 100%;
+       
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        align-content: center;
+        justify-content: center;
+        justify-items: start;
+    }
 }
