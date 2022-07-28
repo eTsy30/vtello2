@@ -1,0 +1,12 @@
+{
+    "eslint.format.enable": true,
+    "eslint.lintTask.options": ".eslintrc.js",
+    "eslint.lintTask.enable": true,
+    "eslint.alwaysShowStatus": true,
+    "eslint.run": "onSave",
+    "eslint.debug": true,
+    "eslint.nodeEnv": "",
+    "eslint.options": {
+    
+    }
+}
